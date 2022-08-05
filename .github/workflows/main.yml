@@ -1,0 +1,20 @@
+name: Actions Test
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '9.0.0'
+
+      - name: Install Zip
+        uses: montudor/action-zip@v1
