@@ -2,7 +2,7 @@ name: Actions Test
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
   build:
