@@ -7,6 +7,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    services:
+      nginx:
+        image: nginx
+        ports:
+          - 8090:80
+          
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -18,3 +25,7 @@ jobs:
 
       - name: Install Zip
         uses: montudor/action-zip@v1
+        
+      - name: Request
+        run: |
+          curl -vv http://localhost:8090
