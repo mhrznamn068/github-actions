@@ -13,6 +13,8 @@ jobs:
         image: nginx
         ports:
           - 8090:80
+        volumes:
+          - ./nginx/conf.d:/etc/nginx/conf.d
           
     steps:
       - name: Checkout
