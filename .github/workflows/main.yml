@@ -47,6 +47,6 @@ jobs:
       - name: Install node dependencies
         run: npm install
         
-      - name: Request
-        run: |
-          curl -vv http://localhost:8090
+      #- name: Request
+      #  run: |
+      #    curl -vv http://localhost:8090
