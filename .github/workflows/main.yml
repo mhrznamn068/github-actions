@@ -13,8 +13,8 @@ jobs:
         image: nginx
         ports:
           - 8090:80
-        volumes:
-          - ${{github.workspace}}/nginx/conf.d:/etc/nginx/conf.d
+        #volumes:
+        #  - ${{github.workspace}}/nginx/conf.d:/etc/nginx/conf.d
           
     steps:
       #- name: Checkout
