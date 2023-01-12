@@ -14,11 +14,19 @@ jobs:
         ports:
           - 8090:80
         #volumes:
-        #  - ${{github.workspace}}/nginx/conf.d:/etc/nginx/conf.d
+        #  - ${{ github.workspace }}/nginx/conf.d:/etc/nginx/conf.d
           
     steps:
-      #- name: Checkout
-      #  uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '9.0.0'
+
+      - name: Install node dependencies
+        run: npm install
         
       - name: Request
         run: |
