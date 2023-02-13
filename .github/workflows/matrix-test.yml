@@ -3,6 +3,9 @@ name: Actions Test
 on:
   push:
     branches: [master]
+    
+env:
+  SERVICENODE: 4
 
 jobs:
  frontend-deploy:
@@ -16,11 +19,11 @@ jobs:
     - name: get-matrix
       run: |
         COUNTER=1; while [  $COUNTER -le ${{ env.SERVICENODES }} ]; do
-          echo "SERVICENODE$COUNTER=${{fromJSON(steps.set-matrix.outputs.matrix).SERVICENODE$COUNTER}}"  >> $GITHUB_ENV
+          echo "SERVICE$COUNTER=${{fromJSON(steps.set-matrix.outputs.matrix).SERVICE$COUNTER}}"  >> $GITHUB_ENV
           COUNTER=$(( $COUNTER +1 ))
         done
         
     - name: Get variables
       run: |
-        echo "FNAME = ${{env.Fname}}"
-        echo "LNAME = ${{env.Lname}}"
+        echo "SERVICE1 = ${{env.SERVICE1}}"
+        echo "SERVICE2 = ${{env.SERVICE2}}"
