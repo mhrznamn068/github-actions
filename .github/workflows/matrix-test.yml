@@ -20,7 +20,8 @@ jobs:
       run: |
         COUNTER=1; while [[  $COUNTER -le ${{ env.SERVICENODE }} ]]; do
           #echo "SERVICE${COUNTER}=$(echo "${{fromJSON(steps.set-matrix.outputs.matrix)}}" | jq -r ".SERVICE${COUNTER}")" >> $GITHUB_ENV
-          echo "SERVICE${COUNTER}=$(echo "${{fromJSON(steps.set-matrix.outputs.matrix)}}")
+          echo "SERVICE${COUNTER}=$(echo "${{fromJSON(steps.set-matrix.outputs.matrix)}}")"
+          echo $SERVICE${COUNTER}
           COUNTER=$(( $COUNTER +1 ))
         done
         
