@@ -1,0 +1,17 @@
+
+
+
+frontend-deploy:
+    runs-on: [self-hosted, dcrunner1]
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+    - id: set-matrix
+      run: echo "::set-output name=matrix::${{secrets.LIVE_SERVER}}"
+
+    - name: get-matrix
+      run: |
+        COUNTER=1; while [  $COUNTER -le ${{ env.SERVICENODES }} ]; do
+          echo "SERVICENODE$COUNTER=${{fromJSON(steps.set-matrix.outputs.matrix).SERVICENODE$COUNTER}}"  >> $GITHUB_ENV
+          COUNTER=$(( $COUNTER +1 ))
+        done
