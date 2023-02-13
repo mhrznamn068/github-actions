@@ -2,7 +2,7 @@ name: Actions Test
 
 on:
   push:
-    branches: [master]
+    branches: [navakobranch]
 
 jobs:
   build:
