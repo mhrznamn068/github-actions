@@ -1,8 +1,12 @@
+name: Actions Test
 
+on:
+  push:
+    branches: [master]
 
-
-frontend-deploy:
-    runs-on: [self-hosted, dcrunner1]
+jobs:
+ frontend-deploy:
+    runs-on: [ubuntu-latest]
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
@@ -15,3 +19,8 @@ frontend-deploy:
           echo "SERVICENODE$COUNTER=${{fromJSON(steps.set-matrix.outputs.matrix).SERVICENODE$COUNTER}}"  >> $GITHUB_ENV
           COUNTER=$(( $COUNTER +1 ))
         done
+        
+    - name: Get variables
+      run: |
+        echo "FNAME = ${{env.Fname}}"
+        echo "LNAME = ${{env.Lname}}"
