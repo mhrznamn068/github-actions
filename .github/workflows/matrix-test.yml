@@ -30,4 +30,9 @@ jobs:
       run: |
         fname=$(echo ${{ secrets.SERVICENODE }} | jq -r .fname)
         echo $fname
+        
+    - name: Export secrets to github evnrionment
+      run: |
+        keys_len=$(echo ${{ secrets.SERVICENODE }} | jq 'length')
+        echo $keys_len
     
