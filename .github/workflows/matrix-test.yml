@@ -15,31 +15,13 @@ jobs:
       run: |
         keys_and_values=$(echo ${{ secrets.SERVICENODE }} | jq -r 'to_entries[] | "\(.key)=\(.value)"')
         for key_value in $keys_and_values; do
-          echo $key_value
+          echo $key_value >> $GITHUB_ENV
         done
         
     - name: Extract value only
       run: |
-        keys=$(echo ${{ secrets.SERVICENODE }} | jq -r 'to_entries[] | "\(.key)"')
-        values=$(echo ${{ secrets.SERVICENODE }} | jq -r 'to_entries[] | "\(.value)"')
-        for value in $values; do 
-          echo $value
-        done
+        echo "Fisrtname is ${{ env.fname }}
+        echo "Lastname is ${{ env.lname }}"
         
-    - name: Extract specific value only
-      run: |
-        fname=$(echo ${{ secrets.SERVICENODE }} | jq -r .fname)
-        echo $fname
-        
-    - name: Export secrets to github evnrionment
-      run: |
-        keys_len=$(echo ${{ secrets.SERVICENODE }} | jq 'length')
-        counter=0
-        while [ $counter -lt $keys_len ]; do
-          key=$(echo ${{ secrets.SERVICENODE }} | jq -r -c "keys | .[$counter]" )
-          value=$(echo ${{ secrets.SERVICENODE }} | jq -r .$key)
-          echo "$key=$value"
-          counter=$(( $counter + 1 ))
-        done
           
     
