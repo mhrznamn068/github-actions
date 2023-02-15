@@ -13,7 +13,7 @@ jobs:
     steps:
     - name: Extract and log the JSON key-values.
       run: |
-        keys_and_values=$(echo ${{ secrets.SERVICENODE }} | jq -r 'to_entries[] | "\(.key) has \(.value)"')
+        keys_and_values=$(echo ${{ secrets.SERVICENODE }} | jq -r 'to_entries[] | "\(.key)=\(.value)"')
         for key_value in $keys_and_values; do
           echo $key_value
         done
@@ -25,3 +25,9 @@ jobs:
         for value in $values; do 
           echo $value
         done
+        
+    - name: Extract specific value only
+      run: |
+        fname=$(echo ${{ secrets.SERVICENODE }} | jq -r .fname)
+        echo $fname
+    
