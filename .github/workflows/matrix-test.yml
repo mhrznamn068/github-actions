@@ -20,7 +20,7 @@ jobs:
         
     - name: Extract value only
       run: |
-        echo "Fisrtname is ${{ env.fname }}
+        echo "Fisrtname is ${{ env.fname }}"
         echo "Lastname is ${{ env.lname }}"
         
           
