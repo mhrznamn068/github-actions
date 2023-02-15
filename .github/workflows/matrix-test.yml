@@ -10,22 +10,17 @@ env:
 jobs:
  frontend-deploy:
     runs-on: [ubuntu-latest]
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-    - id: set-matrix
-      run: echo "::set-output name=matrix::${{secrets.LIVE_SERVER}}"
-
-    - name: get-matrix
+    - name: Extract and log the JSON key-values.
       run: |
-        COUNTER=1; while [[  $COUNTER -le ${{ env.SERVICENODE }} ]]; do
-          #echo "SERVICE${COUNTER}=$(echo "${{fromJSON(steps.set-matrix.outputs.matrix)}}" | jq -r ".SERVICE${COUNTER}")" >> $GITHUB_ENV
-          SERVICE${COUNTER}=$(echo "${{fromJSON(steps.set-matrix.outputs.matrix)}}")
-          echo ${SERVICE${COUNTER}}
-          COUNTER=$(( $COUNTER +1 ))
+        keys_and_values=$(echo ${{ secrets.SERVICENODE }} | jq -r 'to_entries[] | "\(.key)=\(.value)"')
+        for key_value in $keys_and_values; do
+          echo $key_value
         done
         
-    - name: Get variables
+    - name: Extract value only
       run: |
-        echo "SERVICE1 = ${{env.SERVICE1}}"
-        echo "SERVICE2 = ${{env.SERVICE2}}"
+        values=$(echo ${{ secrets.SERVICENODE }} | jq -r 'to_entries[] | "\(.value)"')
+        for value in $values; do 
+          echo $value
+        done
