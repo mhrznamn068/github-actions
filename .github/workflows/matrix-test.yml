@@ -35,7 +35,7 @@ jobs:
       run: |
         keys_len=$(echo ${{ secrets.SERVICENODE }} | jq 'length')
         counter=0
-        while $counter -lt $keys_len; do
+        while [ $counter -lt $keys_len ]; do
           key=$(echo ${{ secrets.SERVICENODE }} | jq -r -c "keys | .[$counter]" )
           value=$(echo ${{ secrets.SERVICENODE }} | jq -r .$key)
           echo "$key=$value"
