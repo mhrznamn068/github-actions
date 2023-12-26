@@ -66,3 +66,4 @@ runs:
         -Dsonar.organization=${{ env.SONARQUBE_ORGANIZATION }}
         -Dsonar.projectKey=${{ inputs.PROJECT_NAME }}
         -Dsonar.sources=${{ github.workspace }}
+      shell: bash
