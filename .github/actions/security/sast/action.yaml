@@ -50,12 +50,6 @@ runs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    #- name: SonarQube Scan
-    #  run: |
-    #    /opt/sonar-scanner/bin/sonar-scanner -Dsonar.host.url=${{ env.SONARQUBE_HOST }} -Dsonar.login=${{ env.SONARQUBE_TOKEN }} \
-    #      -Dsonar.projectKey=${{ inputs.PROJECT_NAME }} -Dsonar.organization=${{ env.SONARQUBE_ORGANIZATION }} -Dsonar.projectBaseDir=${{ github.workspace }}
-    #  shell: bash
-
     - name: Setup SonarQube
       uses: warchant/setup-sonar-scanner@v7
 
@@ -67,3 +61,20 @@ runs:
         -Dsonar.projectKey=${{ inputs.PROJECT_NAME }}
         -Dsonar.sources=${{ github.workspace }}
       shell: bash
+
+    - name: SonarQube Quality Gate check
+      id: sonarqube-quality-gate-check
+      uses: sonarsource/sonarqube-quality-gate-action@master
+      timeout-minutes: 5
+      env:
+       SONAR_TOKEN: ${{ env.SONARQUBE_TOKEN }}
+       SONAR_HOST_URL: ${{ env.SONARQUBE_HOST }}
+
+     - name: SonarQube Pull Request Comment
+       if: always()
+       uses: campos-pay/sonarqube-pr-comment@main
+       with:
+         SONAR_TOKEN: ${{ env.SONARQUBE_TOKEN }}
+         SONAR_HOST_URL: ${{ env.SONARQUBE_HOST }}
+         SONAR_PROJECTKEY: ${{ inputs.PROJECT_NAME }}
+         GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
