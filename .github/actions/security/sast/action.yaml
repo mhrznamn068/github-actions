@@ -43,6 +43,7 @@ runs:
       run: |
         echo "SONARQUBE_HOST=${{ inputs.SONARQUBE_HOST }}"  >> $GITHUB_ENV
         echo "SONARQUBE_TOKEN=${{ inputs.SONARQUBE_TOKEN }}"  >> $GITHUB_ENV
+      shell: bash
 
     - name: Checkout
       uses: actions/checkout@v3
@@ -51,3 +52,4 @@ runs:
       run: |
         /opt/sonar-scanner/bin/sonar-scanner -Dsonar.host.url=${{ env.SONARQUBE_HOST }} -Dsonar.login=${{ env.SONARQUBE_TOKEN }} \
           -Dsonar.projectKey=${{ inputs.PROJECT_NAME }} -Dsonar.organization=SPPL -Dsonar.projectBaseDir=${{ github.workspace }}
+      shell: bash
