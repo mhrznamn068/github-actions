@@ -28,7 +28,7 @@ runs:
   using: composite
   steps:
     - name: Import Secrets
-      if: ${{ inputs.VAULT_ENABLED }}
+      if: ${{ inputs.VAULT_ENABLED == 'true' }}
       uses: hashicorp/vault-action@v2.4.0
       with:
         url: ${{ inputs.VAULT_SERVER }}
@@ -39,7 +39,7 @@ runs:
           ${{ inputs.VAULT_SECRETS_PATH }} SONARQUBE_TOKEN | SONARQUBE_TOKEN
 
     - name: Import Secrets
-      if: ${{ inputs.VAULT_ENABLED }} == false
+      if: ${{ inputs.VAULT_ENABLED == 'false' }}
       run: |
         echo "SONARQUBE_HOST=${{ inputs.SONARQUBE_HOST }}"  >> $GITHUB_ENV
         echo "SONARQUBE_TOKEN=${{ inputs.SONARQUBE_TOKEN }}"  >> $GITHUB_ENV
