@@ -26,6 +26,10 @@ inputs:
   GITHUB_TOKEN:
     description: Github Token
     type: string
+outputs:
+  quality_check:
+    description: >
+      The resulting Status SonarQube 
 
 runs:
   using: composite
