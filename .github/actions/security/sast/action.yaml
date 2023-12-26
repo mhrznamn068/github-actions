@@ -23,6 +23,9 @@ inputs:
   SONARQUBE_TOKEN:
     description: Sonarqube Token
     type: string
+  GITHUB_TOKEN:
+    description: Github Token
+    type: string
 
 runs:
   using: composite
@@ -76,4 +79,4 @@ runs:
         SONAR_TOKEN: ${{ env.SONARQUBE_TOKEN }}
         SONAR_HOST_URL: ${{ env.SONARQUBE_HOST }}
         SONAR_PROJECTKEY: ${{ inputs.PROJECT_NAME }}
-        GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB-TOKEN: ${{ inputs.GITHUB_TOKEN }}
