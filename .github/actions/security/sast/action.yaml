@@ -76,24 +76,8 @@ runs:
        SONAR_TOKEN: ${{ env.SONARQUBE_TOKEN }}
        SONAR_HOST_URL: ${{ env.SONARQUBE_HOST }}
 
-    - name: Checking Sonarqube
-      id: check
+    - name: Scan Report
+      run: |
+        cat .scannerwork/report-task.txt
       shell: bash
-      run: $GITHUB_ACTION_PATH/script/project-status.sh
-      env: 
-       SONAR_HOST_URL: ${{ env.SONARQUBE_HOST }}
-       SONAR_TOKEN: ${{ env.SONARQUBE_TOKEN }}
-       SONAR_PROJECTKEY: ${{ inputs.PROJECT_NAME }}
 
-    - name: PR Comment
-      uses: actions/github-script@v7
-      with:
-        github-token: ${{ inputs.GITHUB_TOKEN }}
-        script: |
-          github.rest.issues.createComment({
-            issue_number: ${{ github.event.number }},
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: '${{ steps.check.outputs.quality_check }}'
-          })
-          core.setFailed('Job run failed')
