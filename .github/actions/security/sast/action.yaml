@@ -69,11 +69,11 @@ runs:
        SONAR_TOKEN: ${{ env.SONARQUBE_TOKEN }}
        SONAR_HOST_URL: ${{ env.SONARQUBE_HOST }}
 
-     - name: SonarQube Pull Request Comment
-       if: always()
-       uses: campos-pay/sonarqube-pr-comment@main
-       with:
-         SONAR_TOKEN: ${{ env.SONARQUBE_TOKEN }}
-         SONAR_HOST_URL: ${{ env.SONARQUBE_HOST }}
-         SONAR_PROJECTKEY: ${{ inputs.PROJECT_NAME }}
-         GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: SonarQube Pull Request Comment
+      if: always()
+      uses: campos-pay/sonarqube-pr-comment@main
+      with:
+        SONAR_TOKEN: ${{ env.SONARQUBE_TOKEN }}
+        SONAR_HOST_URL: ${{ env.SONARQUBE_HOST }}
+        SONAR_PROJECTKEY: ${{ inputs.PROJECT_NAME }}
+        GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
