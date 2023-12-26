@@ -72,11 +72,24 @@ runs:
        SONAR_TOKEN: ${{ env.SONARQUBE_TOKEN }}
        SONAR_HOST_URL: ${{ env.SONARQUBE_HOST }}
 
-    - name: SonarQube Pull Request Comment
-      if: always()
-      uses: campos-pay/sonarqube-pr-comment@main
+    - name: Checking Sonarqube
+      id: check
+      shell: bash
+      run: $GITHUB_ACTION_PATH/script/project-status.sh
+      env: 
+       SONAR_HOST_URL: ${{ env.SONARQUBE_HOST }}
+       SONAR_TOKEN: ${{ env.SONARQUBE_TOKEN }}
+       SONAR_PROJECTKEY: ${{ inputs.PROJECT_NAME }}
+
+    - name: PR Comment
+      uses: actions/github-script@v6
       with:
-        SONAR_TOKEN: ${{ env.SONARQUBE_TOKEN }}
-        SONAR_HOST_URL: ${{ env.SONARQUBE_HOST }}
-        SONAR_PROJECTKEY: ${{ inputs.PROJECT_NAME }}
-        GITHUB-TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        github-token: ${{ inputs.GITHUB_TOKEN }}
+        script: |
+          github.rest.issues.createComment({
+            issue_number: ${{ github.event.number }},
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '${{ steps.check.outputs.quality_check }}'
+          })
+          core.setFailed('Job run failed')
